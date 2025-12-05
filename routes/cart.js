@@ -9,7 +9,6 @@ const getPopulatedCart = (userId) => {
     return Cart.findOne({ userId }).populate("items.product");
 };
 
-// ✅ [FIXED] POST /api/cart/add — Solves the duplicate item problem.
 router.post("/add", verifyToken, async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.user.id;
@@ -38,7 +37,6 @@ router.post("/add", verifyToken, async (req, res) => {
     }
 });
 
-// ✅ [NEW & ESSENTIAL] PUT /api/cart/update — Solves the +/- button problem.
 router.put("/update", verifyToken, async (req, res) => {
     const { productId, quantity } = req.body;
     const userId = req.user.id;
@@ -62,7 +60,6 @@ router.put("/update", verifyToken, async (req, res) => {
     }
 });
 
-// ✅ GET /api/cart — Fetches the user's cart.
 router.get("/", verifyToken, async (req, res) => {
     try {
         const cart = await getPopulatedCart(req.user.id);
@@ -73,7 +70,6 @@ router.get("/", verifyToken, async (req, res) => {
     }
 });
 
-// ✅ [FIXED] PUT /api/cart/remove — Solves the "cart gets empty" problem.
 router.put("/remove", verifyToken, async (req, res) => {
     const { productId } = req.body;
     const userId = req.user.id;
